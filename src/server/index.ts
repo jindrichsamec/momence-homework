@@ -3,7 +3,7 @@ import express  from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-interface Currency {
+export interface CurrencyRate {
   country: string;
   currency: string;
   amount: number;
@@ -11,9 +11,9 @@ interface Currency {
   rate: number;
 }
 
-interface ExchangeList {
+export interface ExchangeList {
   date?: string;
-  rates?: Currency[];
+  rates?: CurrencyRate[];
 }
 
 async function txtToJson(txt: string): Promise<ExchangeList> {
@@ -35,7 +35,7 @@ async function txtToJson(txt: string): Promise<ExchangeList> {
   }
 
   // Process currency data
-  const currencyData: Currency[] = [];
+  const currencyData: CurrencyRate[] = [];
   for (let i = CURRENCY_DATA_START_LINE_INDEX; i < lines.length; i++) {
     const [country, currency, amount, code, rate] = lines[i].split('|');
     currencyData.push({
@@ -51,7 +51,7 @@ async function txtToJson(txt: string): Promise<ExchangeList> {
   return result;
 }
 
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   const response = await fetch('https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt');
   const data = await response.text();
   const jsonData = await txtToJson(data);

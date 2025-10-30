@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run dev:server & npm run dev:client",
+    "dev:client": "vite",
     "dev:server": "node --watch ./src/server/index.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

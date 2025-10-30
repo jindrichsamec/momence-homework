@@ -1,33 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import type { CurrencyRate } from './server/index.ts'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [rates, setRates] = useState<CurrencyRate[]>([])
+
+  useEffect(() => {
+    fetch('/api')
+      .then(response => response.json())
+      .then(data => data.rates)
+      .then(setRates);
+  }, []);
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {rates.map(rate => (
+          <div key={rate.code}>
+            {rate.country}: {rate.amount} {rate.currency} ({rate.code}) - {rate.rate}
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

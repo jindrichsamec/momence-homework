@@ -1,20 +1,9 @@
 import express  from 'express';
+import type { CurrencyRate } from '../CurrencyRate';
+import type { ExchangeList } from '../ExchangeList';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-export interface CurrencyRate {
-  country: string;
-  currency: string;
-  amount: number;
-  code: string;
-  rate: number;
-}
-
-export interface ExchangeList {
-  date?: string;
-  rates?: CurrencyRate[];
-}
 
 async function txtToJson(txt: string): Promise<ExchangeList> {
   const DATE_LINE_INDEX = 0;

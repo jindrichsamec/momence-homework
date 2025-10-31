@@ -1,73 +1,89 @@
-# React + TypeScript + Vite
+# CNB Currency Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Real-time currency converter using Czech National Bank (CNB) exchange rates. Convert CZK to foreign currencies with live data.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React 19, TypeScript, Vite
+- **Backend:** Express, Node.js
+- **Build:** Vite with HMR
 
-## React Compiler
+## Requirements
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js >= 18 (tested on v24)
+- npm
 
-## Expanding the ESLint configuration
+## Development Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Install dependencies
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Run development server
+```bash
+npm run dev
 ```
+Starts both:
+- Express server on `http://localhost:3000`
+- Vite dev server on `http://localhost:5173`
+
+### Build for production
+```bash
+npm run build
+```
+
+### Lint
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```
+src/
+├── App.tsx           # Main React component with conversion UI
+├── server/
+│   └── index.ts      # Express server + CNB API proxy
+└── ...
+```
+
+## How It Works
+
+1. Express server fetches daily exchange rates from CNB (`/api` endpoint)
+2. Parses CNB's text format to JSON
+3. React frontend displays rates and conversion form
+4. Real-time conversion on amount/currency change
+
+## Next Steps
+
+### High Priority
+- [ ] Error handling (network failures, API errors)
+- [ ] Loading states during data fetch
+- [ ] Input validation (negative numbers, NaN)
+- [ ] Better UI/styling
+
+### Testing & Quality
+- [ ] Unit tests (conversion logic, parsing)
+- [ ] E2E tests
+- [ ] TypeScript strict mode
+
+### Features
+- [ ] Reverse conversion (foreign → CZK)
+- [ ] Multiple currency conversions
+- [ ] Exchange rate caching (reduce API calls)
+
+### DevOps
+- [ ] Environment variables config
+- [ ] Production build & deployment guide
+
+## API Reference
+
+### CNB Exchange Rate API
+- **URL:** `https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt`
+- **Updates:** Daily (business days)
+- **Format:** Pipe-delimited text
+
+## License
+
+Private project

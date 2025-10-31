@@ -1,5 +1,7 @@
-import type { CurrencyRate } from "../CurrencyRate";
-import type { ExchangeList } from "../ExchangeList";
+import * as z from "zod";
+
+import { currencyRateSchema } from "../currencyRate.ts";
+import { exchangeListSchema, type ExchangeList } from "../exchangeList.ts";
 
 export async function fetchCnbDataAsJson(): Promise<ExchangeList> {
   const data = await fetchCnbData();
@@ -33,7 +35,7 @@ export async function convertCnbResponseToJson(
     date: parseDate(lines),
   };
 
-  return result;
+  return exchangeListSchema.parse(result);
 }
 
 function parseRates(lines: string[]) {
@@ -48,15 +50,17 @@ function parseRates(lines: string[]) {
         `Invalid currency data format in CNB data. Too few parts. [${line}]`
       );
     }
-    const [country, currency, amount, code, rate] = parts;
 
-    return {
+    const [country, currency, amount, code, rate] = parts;
+    const currencyRateData = {
       country,
       currency,
       amount: parseInt(amount, 10),
       code,
       rate: parseFloat(rate.replace(",", ".")),
-    } as CurrencyRate;
+    };
+
+    return currencyRateSchema.parse(currencyRateData);
   });
 }
 
@@ -68,6 +72,7 @@ function parseDate(lines: string[]) {
   if (!dateMatch) {
     throw new Error("Invalid date format in CNB data");
   }
+  const possibleDate = new Date(Date.parse(dateMatch[1]));
 
-  return dateMatch[1];
+  return z.iso.datetime().parse(possibleDate.toISOString());
 }

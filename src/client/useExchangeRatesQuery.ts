@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { ExchangeList } from "../ExchangeList";
+import type { ExchangeList } from "../exchangeList";
 
 export function useExchangeRatesQuery(): ReturnType<
   typeof useQuery<ExchangeList>

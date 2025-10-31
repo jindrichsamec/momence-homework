@@ -1,11 +1,11 @@
-import { fetchCnbDataAsJson } from "./cnbApiClient.ts";
+import { fetchCnbDataAsJson } from "./cnb/apiClient.ts";
 
 import express from "express";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get("/api", async (req, res) => {
+app.get("/api", async (_req, res) => {
   const jsonData = await fetchCnbDataAsJson();
   res.json(jsonData);
 });

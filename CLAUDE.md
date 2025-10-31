@@ -24,16 +24,21 @@ No test framework currently configured.
 
 **Data Flow**
 1. Express server (`src/server/index.ts`) exposes `/api` endpoint
-2. Server fetches CNB exchange rates via `cnbApiClient.ts`
-3. CNB data (pipe-delimited text) is parsed to JSON
+2. Server fetches CNB exchange rates via `cnb/apiClient.ts`
+3. CNB data (pipe-delimited text) is parsed to JSON by `cnb/apiParser.ts`
 4. Zod schemas validate runtime data (`currencyRate.ts`, `exchangeList.ts`)
 5. React frontend fetches via `useExchangeRatesQuery` hook
 6. Components render rates list and conversion panel
 
 **Type System**
 - All types defined with Zod schemas (not plain TypeScript interfaces)
-- Runtime validation occurs at API boundaries in `cnbApiClient.ts`
+- Runtime validation occurs at API boundaries in `cnb/apiClient.ts` and `cnb/apiParser.ts`
 - Type inference via `z.infer<typeof schema>`
+
+**Module Organization**
+- `src/server/cnb/` - CNB API integration module
+  - `apiClient.ts` - Fetches data from CNB API and orchestrates conversion
+  - `apiParser.ts` - Parsing logic for CNB text format (rates and dates)
 
 **File Naming Convention**
 - Type/schema files use lowercase: `currencyRate.ts`, `exchangeList.ts`

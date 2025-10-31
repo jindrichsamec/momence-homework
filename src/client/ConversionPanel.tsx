@@ -49,7 +49,6 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
           type="number"
           min={0}
           name="amount"
-          defaultValue={0}
           placeholder="Enter amount in CZK"
           onChange={handleAmountChange}
         />
@@ -67,7 +66,7 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
           ))}
         </select>
       </form>
-      <strong>{currencyConversionResult}</strong>
+      <strong data-testid="conversion-result">{currencyConversionResult}</strong>
     </>
   );
 }

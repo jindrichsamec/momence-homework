@@ -4,12 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run dev:server && npm run dev:client",
-    "dev:client": "vite",
-    "dev:server": "node --watch ./src/server/index.ts",
-    "build": "npm run build:client",
-    "build:client": "tsc -b && vite build",
-    "build:server": "tsc -p ./tsconfig.server.json && npx esbuild api/server/index.js --bundle --external:./node_modules/* --outfile=api/index.js --platform=node --format=esm",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
@@ -18,7 +14,6 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.5",
-    "@vercel/node": "^5.5.3",
     "express": "^5.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -1,4 +1,4 @@
-import { exchangeListSchema, type ExchangeList } from "../../exchangeList";
+import { exchangeListSchema, type ExchangeList } from "../exchangeList";
 import { parseRates, parseDate } from "./apiParser";
 
 export async function fetchCnbDataAsJson(): Promise<ExchangeList> {
@@ -7,9 +7,7 @@ export async function fetchCnbDataAsJson(): Promise<ExchangeList> {
 }
 
 export async function fetchCnbData(): Promise<string> {
-  const response = await fetch(
-    "https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt"
-  );
+  const response = await fetch("/api");
   if (!response.ok) {
     throw new Error(`Failed to fetch CNB data: ${response.statusText}`);
   }

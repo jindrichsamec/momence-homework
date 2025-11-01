@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { CurrencyRate } from "../currencyRate";
+import type { CurrencyRate } from "./currencyRate";
 
 interface ConversionPanelProps {
   rates: CurrencyRate[];

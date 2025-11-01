@@ -1,17 +1,10 @@
 {
-  "buildCommand": "npm run build",
   "rewrites": [
     {
       "source": "/api",
-      "destination": "/src/server/index.ts"
-    },
-    {
-      "source": "/cnb",
       "destination": "https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt"
-    },
-    {
-      "source": "/",
-      "destination": "/dist"
     }
+
   ]
+
 }

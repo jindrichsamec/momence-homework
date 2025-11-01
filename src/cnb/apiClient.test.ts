@@ -87,9 +87,7 @@ describe("fetchCnbData", () => {
       const result = await fetchCnbData();
 
       expect(result).toBe(mockData);
-      expect(fetch).toHaveBeenCalledWith(
-        "https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt"
-      );
+      expect(fetch).toHaveBeenCalledWith("/api");
     });
   });
 

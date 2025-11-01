@@ -1,5 +1,5 @@
-import { exchangeListSchema, type ExchangeList } from "../../exchangeList.ts";
-import { parseRates, parseDate } from "./apiParser.ts";
+import { exchangeListSchema, type ExchangeList } from "../../exchangeList";
+import { parseRates, parseDate } from "./apiParser";
 
 export async function fetchCnbDataAsJson(): Promise<ExchangeList> {
   const data = await fetchCnbData();

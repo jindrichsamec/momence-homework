@@ -1,4 +1,4 @@
-import { fetchCnbDataAsJson } from "./cnb/apiClient.ts";
+import { fetchCnbDataAsJson } from "./cnb/apiClient";
 
 import express from "express";
 

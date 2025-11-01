@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { currencyRateSchema } from "./currencyRate.ts";
+import { currencyRateSchema } from "./currencyRate";
 
 export const exchangeListSchema = z.object({
   date: z.iso.datetime(),

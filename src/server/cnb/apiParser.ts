@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { currencyRateSchema } from "../../currencyRate.ts";
+import { currencyRateSchema } from "../../currencyRate";
 
 export function parseRates(lines: string[]) {
   const CURRENCY_DATA_START_LINE_INDEX = 2;

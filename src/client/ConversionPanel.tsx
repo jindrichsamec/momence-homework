@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { CurrencyRate } from '../currencyRate';
+import type { CurrencyRate } from "../currencyRate";
 
 interface ConversionPanelProps {
   rates: CurrencyRate[];
@@ -13,14 +13,14 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       event.currentTarget.form?.requestSubmit();
     },
-    []
+    [],
   );
 
   const handleAmountChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       event.currentTarget.form?.requestSubmit();
     },
-    []
+    [],
   );
 
   const handleFormSubmit = useCallback(
@@ -31,7 +31,7 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
       const formData = new FormData(event.currentTarget);
       const amountInCZK = Number(formData.get("amount"));
       const [rate, amount] = String(formData.get("currency")).split(
-        "_"
+        "_",
       ) as string[];
 
       const convertedAmount = (amountInCZK / Number(rate)) * Number(amount);
@@ -39,7 +39,7 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
 
       return false;
     },
-    []
+    [],
   );
 
   return (
@@ -66,7 +66,9 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
           ))}
         </select>
       </form>
-      <strong data-testid="conversion-result">{currencyConversionResult}</strong>
+      <strong data-testid="conversion-result">
+        {currencyConversionResult}
+      </strong>
     </>
   );
 }

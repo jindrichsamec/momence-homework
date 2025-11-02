@@ -3,6 +3,7 @@ import type { CurrencyRate } from './exchange/currencyRate';
 import { Card } from './ui/Card';
 import { Badge } from './ui/Badge';
 import { Flag } from './country/Flag';
+import { Currency } from './exchange/Currency';
 
 const RateItem = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ export function RatesList({ rates }: { rates: CurrencyRate[] }) {
             {rate.amount} {rate.code}
           </RateValue>
           <CzkRateValue>
-            {rate.rate} CZK
+            <Currency amount={rate.rate} code="CZK" />
           </CzkRateValue>
         </RateItem>
       ))}

@@ -1,10 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import { useCallback, useState } from "react";
 import type { CurrencyRate } from "./exchange/currencyRate";
-import { Card } from './ui/Card';
-import { Input, Select } from './ui/Input';
-import { Badge } from './ui/Badge';
-import { Flag } from './country/Flag';
+import { Card } from "./ui/Card";
+import { Input, Select } from "./ui/Input";
+import { Badge } from "./ui/Badge";
+import { Flag } from "./country/Flag";
+import { Currency } from "./exchange/Currency";
 
 const Form = styled.form`
   display: flex;
@@ -21,6 +22,8 @@ const Label = styled.label`
 `;
 
 const Result = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-top: 1.5rem;
   padding: 1.5rem;
   background: #f9fafb;
@@ -41,19 +44,21 @@ interface ConversionPanelProps {
 export function ConversionPanel({ rates }: ConversionPanelProps) {
   const [currencyConversionResult, setCurrencyConversionResult] =
     useState<number>(0);
+  const [currencyConversionResultCode, setCurrencyConversionResultCode] =
+    useState<string>("");
 
   const handleCurrencyChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       event.currentTarget.form?.requestSubmit();
     },
-    [],
+    []
   );
 
   const handleAmountChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       event.currentTarget.form?.requestSubmit();
     },
-    [],
+    []
   );
 
   const handleFormSubmit = useCallback(
@@ -63,23 +68,26 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
 
       const formData = new FormData(event.currentTarget);
       const amountInCZK = Number(formData.get("amount"));
-      const [rate, amount] = String(formData.get("currency")).split(
-        "_",
+      const [rate, amount, code] = String(formData.get("currency")).split(
+        "_"
       ) as string[];
 
       const convertedAmount = (amountInCZK / Number(rate)) * Number(amount);
       setCurrencyConversionResult(convertedAmount);
+      setCurrencyConversionResultCode(code);
 
       return false;
     },
-    [],
+    []
   );
 
   return (
     <Card>
       <Form onSubmit={handleFormSubmit} method="post">
         <Label>
-          <Badge><Flag countryCode='CZK' /> CZK</Badge>
+          <Badge>
+            <Flag countryCode="CZK" /> CZK
+          </Badge>
         </Label>
         <Input
           type="number"
@@ -93,9 +101,7 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
           {rates.map((rate) => (
             <option
               key={rate.code}
-              value={[rate.rate, rate.amount].join("_")}
-              data-rate={rate.rate}
-              data-amount={rate.amount}
+              value={[rate.rate, rate.amount, rate.code].join("_")}
             >
               {rate.currency} ({rate.code})
             </option>
@@ -103,8 +109,13 @@ export function ConversionPanel({ rates }: ConversionPanelProps) {
         </Select>
       </Form>
       <Result>
+          {currencyConversionResultCode ? (
+            <Badge><Flag countryCode={currencyConversionResultCode} size={48} /></Badge>
+          ) : (
+            null
+          )}
         <ResultValue data-testid="conversion-result">
-          {currencyConversionResult.toFixed(2)}
+          <Currency amount={currencyConversionResult} code={currencyConversionResultCode} />
         </ResultValue>
       </Result>
     </Card>

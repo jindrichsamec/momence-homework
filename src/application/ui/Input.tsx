@@ -16,6 +16,11 @@ export const Input = styled.input`
   &::placeholder {
     color: #9ca3af;
   }
+
+  &:invalid {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgb(239 68 68 / 0.1);
+  }
 `;
 
 export const Select = styled.select`

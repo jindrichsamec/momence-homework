@@ -31,7 +31,7 @@ test.describe("Basic currency conversion flow", () => {
 
     await expect(page.getByTestId("rate-item")).toHaveCount(31);
     await expect(page.getByTestId("conversion-result")).toHaveText(
-      (AMOUNT_TO_CONVERT / usdRate).toFixed(2).toString()
+      `$${(AMOUNT_TO_CONVERT / usdRate).toFixed(2).toString()}`
     );
   });
 });

@@ -18,7 +18,13 @@ const RateItem = styled.div`
 
 const RateValue = styled.span`
   font-weight: 600;
+  color: #6b7280;
+
+`;
+
+const CzkRateValue = styled(RateValue)`
   color: #111827;
+  font-size: 1.25rem;
 `;
 
 const Header = styled.h2`
@@ -37,8 +43,11 @@ export function RatesList({ rates }: { rates: CurrencyRate[] }) {
             <Flag countryCode={rate.code} size={48} />
           </Badge>
           <RateValue>
-            {rate.amount}{rate.code} : {rate.rate}CZK
+            {rate.amount} {rate.code}
           </RateValue>
+          <CzkRateValue>
+            {rate.rate} CZK
+          </CzkRateValue>
         </RateItem>
       ))}
     </Card>

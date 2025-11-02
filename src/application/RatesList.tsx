@@ -1,4 +1,4 @@
-import type { CurrencyRate } from './currencyRate';
+import type { CurrencyRate } from './exchange/currencyRate';
 
 export function RatesList({ rates }: { rates: CurrencyRate[] }) {
   return (

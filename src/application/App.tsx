@@ -1,7 +1,6 @@
-import { useExchangeRatesQuery } from './useExchangeRatesQuery';
+import { useExchangeRatesQuery } from './useExchangeRatesQuery.ts';
 import { ConversionPanel } from "./ConversionPanel.tsx";
 import { RatesList } from "./RatesList.tsx";
-import "./App.css";
 
 function App() {
   const { data, isLoading, isError, error } = useExchangeRatesQuery();
